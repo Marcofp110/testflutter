@@ -8,14 +8,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Test Flutter App',
+      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      initialRoute: '/',
       routes: {
-        'im_here': (context) => ImHerePage(),
-        'goodbye': (context) => GoodbyePage(),
+        '/': (context) => HomePage(),
+        '/im_here': (context) => ImHerePage(),
+        '/goodbye': (context) => GoodbyePage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -26,52 +27,50 @@ class MyApp extends StatelessWidget {
           case '/goodbye':
             return MaterialPageRoute(builder: (context) => GoodbyePage());
           default:
-            return MaterialPageRoute(builder: (context) => HomePage());
+            return null;
         }
-      },
-      builder: (context, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('Test Flutter App'),
-          ),
-          drawer: Drawer(
-            child: ListView(
-              children: [
-                ListTile(
-                  title: Text('Homepage'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/');
-                  },
-                ),
-                ListTile(
-                  title: Text('I\'m here'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/im_here');
-                  },
-                ),
-                ListTile(
-                  title: Text('Goodbye'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/goodbye');
-                  },
-                ),
-              ],
-            ),
-          ),
-          body: child,
-        );
       },
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  final String myName = 'Marco';
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Hello, $myName', style: TextStyle(fontSize: 24),),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Center(
+        child: Text('Hello, Marco'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/');
+              },
+            ),
+            ListTile(
+              title: Text('I\'m here'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/im_here');
+              },
+            ),
+            ListTile(
+              title: Text('Goodbye'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/goodbye');
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -79,8 +78,13 @@ class HomePage extends StatelessWidget {
 class ImHerePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('I\'m here', style: TextStyle(fontSize: 24),),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('I\'m here'),
+      ),
+      body: Center(
+        child: Text('I\'m here'),
+      ),
     );
   }
 }
@@ -88,8 +92,13 @@ class ImHerePage extends StatelessWidget {
 class GoodbyePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Goodbye', style: TextStyle(fontSize: 24),),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Goodbye'),
+      ),
+      body: Center(
+        child: Text('Goodbye'),
+      ),
     );
   }
 }
